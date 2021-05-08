@@ -15,7 +15,7 @@ https://github.com/jeongmint/software-engineering02/
 [git config](##-git-config)<br/>
 [git init](##-git-init)<br/>
 [git log](##-git-log)<br/>
-[git merge](##-git-merged)<br/>
+[git merge](##-git-merge)<br/>
 [git pull](##-git-pull)<br/>
 [git push](##-git-push)<br/>
 [git rebase](##-git-rebase)<br/>
