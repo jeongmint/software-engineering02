@@ -1,5 +1,16 @@
 # Markdown Syntax 정리
 
+<br>
+
+## GitHub repository URL
+
+https://github.com/jeongmint/software-engineering
+
+<br>
+
+---
+<br>
+
 <img src="https://user-images.githubusercontent.com/39428260/117532964-fcb58d80-b024-11eb-8ba4-830a49158050.png" width="20%" height="20%">
 </img>
 
@@ -810,16 +821,6 @@ mojombo/github-flavored-markdown#1
   "상상이 현실이 된다!"
   👐➡🦋✨
   ```
-<br>
-
----
-
-<br>
-
-## GitHub repository URL
-
-https://github.com/jeongmint/software-engineering
-
 <br>
 
 ---
