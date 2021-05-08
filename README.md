@@ -32,11 +32,32 @@ git config --list
 해당 명령어를 수행하면 다음과 같이 설정이 적용된 리스트를 볼 수 있습니다.
 ![git_config_list](https://user-images.githubusercontent.com/39428260/117537897-b3723780-b03e-11eb-9700-98a1b5e697f1.png)
 
+<br>
+
+## git clone
+github 사이트에서 생성한 repository를 로컬 PC로 가져오는 작업을 수행합니다. "sotfware-engineering02" 라는 저장소를 만든 후 초록색 code 버튼을 눌러 주소를 복사할 수 있습니다.
+
+![clone](https://user-images.githubusercontent.com/39428260/117538005-2085cd00-b03f-11eb-91a9-243c6e0c3e64.png)
+
+복사한 주소를 다음과 같이 git clone 뒤에 "" 를 사용하여 붙여 넣습니다.
+
+```
+git clone "https://github.com/jeongmint/software-engineering02.git"
+```
+
+![copy](https://user-images.githubusercontent.com/39428260/117538076-70fd2a80-b03f-11eb-9d37-bd3acded6e1c.png)
 
 
 <br>
 
 ## git init
+git init 의 init은 "initialize(초기화)"를 뜻합니다. 이 명령어를 입력하기 전까지는 일반 디렉토리였지만, git init 으로 초기화를 시키면 해당 디렉토리를 로컬 깃 저장소로 등록합니다.
+
+<br>
+
+저는 다음과 같이 cd 명령어로 software-engineering02 저장소의 폴더로 이동을 한 후 초기화를 해 주었습니다.
+
+![init](https://user-images.githubusercontent.com/39428260/117538151-cfc2a400-b03f-11eb-8c33-52bb3f225255.png)
 
 <br>
 
