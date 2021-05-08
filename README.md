@@ -7,21 +7,21 @@ https://github.com/jeongmint/software-engineering02/
 ---
 
 ## ✏️ git 명령어 목록
-[git add](##-git-add)<br/>
-[git branch](##-git-branch)<br/>
-[git checkout](##-git-checkout)<br/>
-[git clone](##-git-clone)<br/>
-[git commit](##-git-add)<br/>
-[git config](##-git-config)<br/>
-[git init](##-git-init)<br/>
+[git add](##-git-add)ㅇ<br/>
+[git branch](##-git-branch)ㅇ<br/>
+[git checkout](##-git-checkout)ㅇ<br/>
+[git clone](##-git-clone)ㅇ<br/>
+[git commit](##-git-commit)d<br/>
+[git config](##-git-config)d<br/>
+[git init](##-git-init)d<br/>
 [git log](##-git-log)<br/>
-[git merge](##-git-merge)<br/>
+[git merge](##-git-merge)d<br/>
 [git pull](##-git-pull)<br/>
-[git push](##-git-push)<br/>
+[git push](##-git-push)d<br/>
 [git rebase](##-git-rebase)<br/>
-[git remote](##-git-remote)<br/>
-[git reset](##-git-reset-)<br/>
-[git status](##-git-status)<br/>
+[git remote](##-git-remote)ㅇ<br/>
+[git reset](##-git-reset)<br/>
+[git status](##-git-status)d<br/>
 [git tag](##-git-tag)<br/>
 
 ---
@@ -129,8 +129,67 @@ $ git push <원격 저장소명> <브랜치명>
 ![push](https://user-images.githubusercontent.com/39428260/117539124-24681e00-b044-11eb-9969-c2e0171206f4.png)
 <br><br>
 
-## git status
+---
 
+<br>
+
+## ✔️ 분기점을 사용하여 동시 작업하기
+## git branch
+branch를 뜬다 는 표현은 작업할 때 다시 돌아올 분기점을 만드는 것과 같습니다. git branch 뒤에 branch 명을 지정하여 생성할 수 있으며 branch 명을 지정하지 않으면 지금까지 생성된 branch 목록을 열람할 수 있습니다.
+## git checkout
+checkout 명령어는 branch를 지정한 branch를 사용할 수 있도록 셋팅해 주는 역할(orchid 색으로 최우측에 표시)을 합니다. -b 옵션을 통해서 branch 생성과 동시에 checkout을 수행할 수 있습니다.
+```
+$ git branch <브랜치명>
+$ git branch -v <브랜치명>
+$ git branch -a <브랜치명>
+$ git branch
+$ git checkout -b <브랜치명>
+```
+![branch](https://user-images.githubusercontent.com/39428260/117539360-41512100-b045-11eb-9c16-8a10b4ebe20d.png)
+![checkout](https://user-images.githubusercontent.com/39428260/117539432-93924200-b045-11eb-8418-11b1377cc92d.png)
+위와 같이 status 명령어를 수행하여 branch 가 origin이 된 것을 알 수 있습니다. <br>
+
+branch 명령어의 -v 옵션은 커밋과 함께 branch 목록을 나열해 주고, -a 옵션은 로컬/리모트 저장소의 모든 branch 정보를 보여줍니다.
+
+![branch commit](https://user-images.githubusercontent.com/39428260/117539757-09e37400-b047-11eb-8675-13268e1ee810.png)
+
+하지만 현재 branch 는 origin 이라는 remote에 있는 origin branch 가 된 것이므로 "origin"이라는 branch 이름은 별로 좋지 않습니다(...) branch 이름은 역할에 따라 release, develop, hotfix, feature ... 등 규칙적인 형태로 팀원과 합의하여 이름을 작성하는 것이 건강합니다💪 
+
+![branch2](https://user-images.githubusercontent.com/39428260/117539433-942ad880-b045-11eb-9da4-9c6c72a25861.png)
+
+---
+
+<br>
+
+## ✔️ 작업 병합하기
+## git status
+먼저 git status를 통해 파일의 작업 상태를 확인할 수 있습니다. 파일 상태를 확인하는 작업은 자신이 어떤 명령어를 수행해야 할 지 초석이 되어 줍니다. 작업은 origin이라는 branch 에서 수행하였습니다. 작업한 파일을 병합하기 전에 add 하여 staged 해줍니다. <br>
+![merge1](https://user-images.githubusercontent.com/39428260/117540022-28963a80-b048-11eb-984c-38a777d3052a.png)
+![status1](https://user-images.githubusercontent.com/39428260/117540003-13211080-b048-11eb-846f-a58b81a67a7f.png)
+
+여기서 commit 을 수행합니다. commit 내역을 자세히 보면 23 줄이 추가 되었으며 1 줄이 삭제되었다는 것을 알 수 있습니다. 이는 merge를 수행하기 위해 파일을 수정하였기 때문입니다. 이후에 git status 를 쳐보면, 커밋할 것이 없으며 working 내역이 깨끗하다는 상태를 알려줍니다.
+![status2](https://user-images.githubusercontent.com/39428260/117540020-27fda400-b048-11eb-9d73-69e79ad2bab1.png)
+
+<br>
+
+## git merge
+이제 작업을 병합해 봅시다! 현재 origin 이라는 branch에서 작업하였으니 main branch로 돌아갑니다.
+![merge0](https://user-images.githubusercontent.com/39428260/117540021-28963a80-b048-11eb-9598-93ac58e57f80.png)
+
+```
+$ git merge <브랜치 명>
+```
+다음과 같이 main branch 에 origin branch 를 병합할 수 있습니다. 정상적으로 병합하면 맨 아래 줄 처럼 커밋할 때 나타난 파일 수정 내역과 동일한 내역이 나타나며 실제 파일을 열어보아도 작업 내역이 갱신되어 병합된 것을 확인할 수 있습니다.<br>
+![merge3](https://user-images.githubusercontent.com/39428260/117540024-292ed100-b048-11eb-869c-7b8f97800341.png)
+
+
+---
+
+<br>
+
+## ✔️ 작업 병합하기
+
+## git reset
 
 ---
 
