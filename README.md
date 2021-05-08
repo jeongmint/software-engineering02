@@ -7,21 +7,21 @@ https://github.com/jeongmint/software-engineering02/
 ---
 
 ## ✏️ git 명령어 목록
-[git add](##-git-add)ㅇ<br/>
-[git branch](##-git-branch)ㅇ<br/>
-[git checkout](##-git-checkout)ㅇ<br/>
-[git clone](##-git-clone)ㅇ<br/>
-[git commit](##-git-commit)d<br/>
-[git config](##-git-config)d<br/>
-[git init](##-git-init)d<br/>
+[git add](##-git-add)<br/>
+[git branch](##-git-branch)<br/>
+[git checkout](##-git-checkout)<br/>
+[git clone](##-git-clone)<br/>
+[git commit](##-git-commit)<br/>
+[git config](##-git-config)<br/>
+[git init](##-git-init)<br/>
 [git log](##-git-log)<br/>
-[git merge](##-git-merge)d<br/>
+[git merge](##-git-merged)<br/>
 [git pull](##-git-pull)<br/>
-[git push](##-git-push)d<br/>
+[git push](##-git-push)<br/>
 [git rebase](##-git-rebase)<br/>
-[git remote](##-git-remote)ㅇ<br/>
-[git reset](##-git-reset)<br/>
-[git status](##-git-status)d<br/>
+[git remote](##-git-remote)<br/>
+[git reset --hard](##-git-reset---hard)<br/>
+[git status](##-git-status)<br/>
 [git tag](##-git-tag)<br/>
 
 ---
@@ -173,7 +173,7 @@ branch 명령어의 -v 옵션은 커밋과 함께 branch 목록을 나열해 주
 <br>
 
 ## git merge
-이제 작업을 병합해 봅시다! 현재 origin 이라는 branch에서 작업하였으니 main branch로 돌아갑니다.
+이제 branch를 병합해 봅시다! 현재 origin 이라는 branch에서 작업하였으니 main branch로 돌아갑니다.
 ![merge0](https://user-images.githubusercontent.com/39428260/117540021-28963a80-b048-11eb-9598-93ac58e57f80.png)
 
 ```
@@ -182,18 +182,155 @@ $ git merge <브랜치 명>
 다음과 같이 main branch 에 origin branch 를 병합할 수 있습니다. 정상적으로 병합하면 맨 아래 줄 처럼 커밋할 때 나타난 파일 수정 내역과 동일한 내역이 나타나며 실제 파일을 열어보아도 작업 내역이 갱신되어 병합된 것을 확인할 수 있습니다.<br>
 ![merge3](https://user-images.githubusercontent.com/39428260/117540024-292ed100-b048-11eb-869c-7b8f97800341.png)
 
+<br>
+
+## git log
+```
+$ git log
+```
+git log 명령어는 다양한 옵션과 함께 커밋 상태, branch내역 그리고 checksum(커밋마다 부여되는 고유한, 엄청 긴 숫자와 문자의 조합)을 보여줍니다. 이를 커밋 히스토리 라고도 합니다.
+
+![log](https://user-images.githubusercontent.com/39428260/117540730-75c7db80-b04b-11eb-96f4-e47ff63b6f29.png)
+
+<br>
+
+보통 저는 다음과 같이 --oneline, --pretty, --decorate, --graph, -all 옵션 등을 조합하여 커밋 그래프와 branch 상태를 시각적으로 보기 위해 log 명령어를 사용합니다.
+
+```
+$ git log --pretty --oneline
+$ git log --oneline --decorate --graph --all
+```
+![pretty](https://user-images.githubusercontent.com/39428260/117540833-fdade580-b04b-11eb-9f38-e5ee13ebdc48.png)
+
+
+merge의 그래프를 그려보면 다음과 같이 하나의 브랜치로 모아지는 형태가 됩니다.
+
+![merge-branch](https://user-images.githubusercontent.com/39428260/117540582-fcc88400-b04a-11eb-8c5b-852afe7b8d59.png)
 
 ---
 
 <br>
 
-## ✔️ 작업 병합하기
+## ✔️ 병합 시 충돌 제어하기
 
-## git reset
+![collision-origin](https://user-images.githubusercontent.com/39428260/117541192-ae68b480-b04d-11eb-8b9a-518d246111fe.png)
+![Inkedcollision-issue_LI](https://user-images.githubusercontent.com/39428260/117541194-b163a500-b04d-11eb-8356-ae1f9ad8728a.jpg)
+
+일단 origin, issue branch에 각각 동일한 라인에 이모지만 바꿔 두었습니다. 하지만 두 파일을 병합하기 위해 merge를 수행하면 다음과 같이 conflict가 뜹니다. 이는 파일이 서로 동시 작업되었기 때문에 어떤 것을 병합할 지 몰라 충돌한 것이기 때문입니다.
+
+![conflict](https://user-images.githubusercontent.com/39428260/117541294-2931cf80-b04e-11eb-83d4-7822f23efb1b.png)
+
+다음과 같이 나타난 코드에 <<<< HEAD 와 >>>> issue 사이의 작업 내역을 하나로 뭉쳐주고 쓸데 없는 코드 또한 지워준 후 다시 커밋을 수행하면 정상적으로 동작합니다. <br>
+
+![change-conflict](https://user-images.githubusercontent.com/39428260/117541330-5c745e80-b04e-11eb-8697-9754f89ba2bc.png)
+
+이렇게 merge를 수행하고 push를 수행하면 github로 다시 돌아가서 pull request를 수행해야 합니다. 충돌과 관련한 적당한 메시지를 적고 작업 내역을 합쳐도 괜찮을지 request를 남기면 협업에 굉장한 도움이 됩니다. pull request 도 끝났고, merge 도 끝났다면 해당 branch는 삭제해 버리도록 합니다. <br>
+
+![request1](https://user-images.githubusercontent.com/39428260/117541477-fdfbb000-b04e-11eb-973d-0cd2c6236a8a.png)
+
+<br>
+
+## ✔️ 커밋 삭제하기
+## git reset --hard
+
+git reset 중에서도 --hard 옵션을 통해서 커밋 기록을 삭제해 보도록 합니다.
+
+![reset0](https://user-images.githubusercontent.com/39428260/117541684-e8d35100-b04f-11eb-83b1-a0667f0603f3.png)
+
+아뿔싸! commit 메시지에 오타가 났습니다😇 커밋 메시지를 삭제해 보겠습니다.
+```
+$ git reset --hard HEAD^
+$ git reset --hard <체크섬>
+```
+
+![reset-check](https://user-images.githubusercontent.com/39428260/117541686-e96be780-b04f-11eb-82ca-caba3aaf0f66.png)
+
+reset 명령어를 수행한 후 git log를 확인 해 보면 정상적으로 커밋이 삭제된 것을 확인할 수 있습니다.
+
+<br>
+
+## git rebase
+다른 방식으로도 병합을 수행할 수 있는데 rebase 명령어는 merge와 사뭇 결이 다릅니다. merge는 branch를 하나로 모으는 역할을 하는데, rebase는 branch를 살리면서(base로 두고) 같이 뻗어나가는 형식으로 병합을 수행합니다.
+
+![rebase-branch](https://user-images.githubusercontent.com/39428260/117540988-ba07ab80-b04c-11eb-9a2a-23d6b6462a48.png)
+
+merge와 동일하게 brach를 떠서 작업한 후 develop branch, feature branch 각각에 겹치면서 다른 코드 변경을 수행합니다. 
+![rebase1](https://user-images.githubusercontent.com/39428260/117541942-5f248300-b051-11eb-9bb6-5bcbfd7ae836.png)
+![rebase2](https://user-images.githubusercontent.com/39428260/117541944-5fbd1980-b051-11eb-8858-e0586c00534c.png)
+
+merge 는 덮어 씌우고자 하는 branch에 가서 checkout을 한 반면, rebase 는 덮어 쓰고 싶은 brach에 가서 checkout을 하고 branch 를 병합합니다.
+```
+git rebase <브랜치 명>
+```
+
+![rebase6](https://user-images.githubusercontent.com/39428260/117540994-bbd16f00-b04c-11eb-86ab-c0b419bec8f2.png)
+
+여기서도 충돌을 제어하기 위해 해당 branch로 돌아가 가볍게 코드를 고쳐주도록 합시다.
+
+![rebase-result](https://user-images.githubusercontent.com/39428260/117542081-0ef9f080-b052-11eb-86e4-3d84845cc310.png)
+
+그 후 add 로 stage에 올리면 다음과 같이 main branch 가 (develop | REBASE 1/1) 상태가 된 것을 알 수 있습니다.
+<br>
+
+
+<br>
+
+## ✔️ 동시 작업 후 갱신하기
+## git pull
+
+
+```
+$ git pull <리모트> <브랜치 명>
+```
+
+git pull 명령어는 원격에 저장된 git 프로젝트의 현재 상태를 다운받고 현재 위치한 브랜치로 병합해 줍니다. 그렇기 때문에 다른 작업 내역과 충돌이 일어나지 않도록 수시로 git pull을 하여 갱신을 해야 협업에 무리가 없습니다.
+
+![pull](https://user-images.githubusercontent.com/39428260/117542383-62b90980-b053-11eb-90e7-fd45761235d8.png)
+
+
+<br>
 
 ---
 
-## git 명령어 사용 여부
+<br>
+
+## ✔️ 커밋에 태그 달기
+## git tag
+git tag 명령어는 커밋에 태그를 달아 줍니다. tag는 말 그대로 해당 커밋을 빠르게 찾을 수 있게 도와주며 index와 같은 역할을 합니다. -a 옵션을 활용하면 tag에 메시지를 입력할 수 있습니다. git tag 명령어는 현재 생성된 tag의 목록을 나열합니다.
+```
+$ git tag <태그 명> <체크섬>
+$ git tag -a <태그 명> <체크섬>
+$ git tag
+```
+![tag1](https://user-images.githubusercontent.com/39428260/117542707-a52f1600-b054-11eb-839c-85b17c1da0d0.png)
+![tag2](https://user-images.githubusercontent.com/39428260/117542709-a5c7ac80-b054-11eb-9ec5-61b226885e60.png)
+
+```
+$ git show <태그 명>
+```
+show 명령어를 태그 이름과 함께 수행하면 해당 태그의 모든 내역(커밋 메시지, 작성자, 커밋 날짜, 태그 메시지)을 포함하여 표시해 줍니다.
+
+![tag3](https://user-images.githubusercontent.com/39428260/117542712-a5c7ac80-b054-11eb-81bc-0cbc00785643.png)
+
+하지만 tag 명령어는 add 명령어로 staged 되지 않으며 commit 으로 내역을 원격에 전달할 수 없기 때문에 다음과 같이 전체 태그 내역을 push 해주어야 합니다.
+
+```
+$ git push --tag
+```
+
+![tag4](https://user-images.githubusercontent.com/39428260/117542713-a6604300-b054-11eb-9cbc-6fd6ac123fec.png)
+
+<br>
+git log를 수행해 보면 다음과 같이 tag가 커밋 히스토리와 함께 나타나는 것을 볼 수 있습니다.
+
+![tag5](https://user-images.githubusercontent.com/39428260/117542714-a6604300-b054-11eb-8810-8e20cca1783e.png)
+
+
+<br>
+
+---
+
+## ● git 명령어 사용 여부
 
 <br>
 
